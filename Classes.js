@@ -37,7 +37,7 @@ class Pet extends Animal {
   }
 
   alimentar(){
-    this.fome = this.fome + 10;
+    this.fome = this.fome - 10;
   }
 
   brincar(){

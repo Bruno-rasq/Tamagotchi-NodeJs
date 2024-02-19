@@ -6,15 +6,41 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-const pet = new Pet('Coelho', 'macho', 'Osvaldo');
+let pet;
 
+
+function configPet(){
+
+  return new Promise((resolve) => {
+    rl.question('Qual é o nome do Pet? ', (nome) => {
+      rl.question('Qual é a espécie do Pet? ', (especie) => {
+        rl.question('Qual é o gênero do Pet? ', (genero) => {
+          //rl.close();
+          resolve({ nome, especie, genero });
+        });
+      });
+    });
+  });
+  
+}
+
+async function criarNovoPet() {
+  const respostas = await configPet();
+  pet = new Pet(respostas.nome, respostas.especie, respostas.genero);
+  
+  console.clear()
+  console.log('Novo Pet criado:');
+  iniciar();
+}
 
 function alimentar(){
   console.log('alimentando...')
 }
+
 function brincar(){
   console.log('brincando...')
 }
+
 function dormir(){
   console.log('dormindo...')
 }
@@ -34,6 +60,7 @@ const PetMenu = () => {
   console.log(`Fome: ${fome}% | Saude: ${saude}% | Felicidade: ${felicidade}%`);
   
 }
+
 function exibirMenu() {
   console.log('')
   console.log('\nMenu:');
@@ -79,4 +106,4 @@ function iniciar() {
   });
 }
 
-iniciar();
+criarNovoPet();
