@@ -1,9 +1,27 @@
 const readline = require('readline');
+const { Pet } = require('./Classes.js');
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
+const pet = new Pet('cachorro', 'macho', 'Rex');
+
+const PetMenu = () => {
+  
+  const nome = pet.nome;
+  const especie = pet.especie;
+  const genero = pet.genero;
+  const fome = pet.fome;
+  const saude = pet.saude;
+  const felicidade = pet.felicidade;
+  
+  console.log('----- Pet -----')
+  console.log(`ID: ${nome}, ${especie} ${genero}`);
+  console.log(`Fome: ${fome} | Saude: ${saude} | Felicidade: ${felicidade}`);
+  
+}
 
 
 function alimentar(){
@@ -59,4 +77,6 @@ function iniciar() {
   });
 }
 
-iniciar();
+//iniciar();
+
+PetMenu()
