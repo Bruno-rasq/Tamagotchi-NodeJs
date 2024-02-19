@@ -6,22 +6,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-const pet = new Pet('cachorro', 'macho', 'Rex');
-
-const PetMenu = () => {
-  
-  const nome = pet.nome;
-  const especie = pet.especie;
-  const genero = pet.genero;
-  const fome = pet.fome;
-  const saude = pet.saude;
-  const felicidade = pet.felicidade;
-  
-  console.log('----- Pet -----')
-  console.log(`ID: ${nome}, ${especie} ${genero}`);
-  console.log(`Fome: ${fome} | Saude: ${saude} | Felicidade: ${felicidade}`);
-  
-}
+const pet = new Pet('Coelho', 'macho', 'Osvaldo');
 
 
 function alimentar(){
@@ -34,7 +19,23 @@ function dormir(){
   console.log('dormindo...')
 }
 
+const PetMenu = () => {
+  
+  const nome = pet.nome;
+  const especie = pet.especie;
+  const genero = pet.genero;
+  const fome = pet.fome;
+  const saude = pet.saude;
+  const felicidade = pet.felicidade;
+  
+  console.log('----- Pet -----')
+  console.log('')
+  console.log(`nome: ${nome}, ${especie} ${genero}`);
+  console.log(`Fome: ${fome}% | Saude: ${saude}% | Felicidade: ${felicidade}%`);
+  
+}
 function exibirMenu() {
+  console.log('')
   console.log('\nMenu:');
   console.log('')
   console.log('1. alimentar | 2. brincar | 3. dormir | 4. sair');
@@ -43,6 +44,7 @@ function exibirMenu() {
 
 function iniciar() {
   
+  PetMenu();
   exibirMenu();
 
   rl.question('Escolha uma opção: ', (opcao) => {
@@ -77,6 +79,4 @@ function iniciar() {
   });
 }
 
-//iniciar();
-
-PetMenu()
+iniciar();
