@@ -1,4 +1,5 @@
 class Animal {
+  
   constructor(especie, genero){
     this.especie = especie;
     this.genero = genero;
@@ -6,7 +7,8 @@ class Animal {
   }
 
   build(){
-    this.fome = 30;
+    this.vivo = true;
+    this.fome = Math.round(Math.random() * 50);
     this.saude = 100;
     this.felicidade = 100;
     this.loopID = null;
@@ -20,6 +22,7 @@ class Animal {
       if(this.saude <= 50){
         this.felicidade = this.felicidade - 10;
       }
+      this.morte();
     }, 10000)
   }
 
@@ -32,10 +35,6 @@ class Pet extends Animal {
     this.nome = nome;
   }
 
-  carinho(){
-    this.felicidade = this.felicidade + 30;
-  }
-
   alimentar(){
     this.fome = this.fome - 10;
   }
@@ -46,6 +45,18 @@ class Pet extends Animal {
 
   curar(){
     this.saude = this.saude + 10;
+  }
+
+  morte(){
+    if(this.saude <= 0 || 
+       this.felicidade <= 0 || 
+       this.fome > 100){
+      console.log('Seu pet morreu!');
+      this.vivo = false;
+      clearInterval(this.loopID);
+      rl.close();
+    }
+    return this.vivo;
   }
 
 }

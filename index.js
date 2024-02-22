@@ -1,19 +1,42 @@
 const readline = require('readline');
 const { Pet } = require('./Classes.js');
+const { rabbit, cat, duck } = require('./Draw.js')
+
+let pet;
+let petImage;
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-let pet;
 
+// run code...
+criarNovoPet();
+
+function configPetImage(){
+  switch(pet.especie){
+    case 'Rabbit':
+      petImage = rabbit;
+      break;
+    case 'Cat':
+      petImage = cat;
+      break;
+    case 'Duck':
+      petImage = duck;
+      break;
+  }
+}
 
 function configPet(){
 
   return new Promise((resolve) => {
     rl.question('Qual é o nome do Pet? ', (nome) => {
+      
       rl.question('Qual é a espécie do Pet? ', (especie) => {
+        
+        configPetImage();
+        
         rl.question('Qual é o gênero do Pet? ', (genero) => {
           //rl.close();
           resolve({ nome, especie, genero });
@@ -24,7 +47,7 @@ function configPet(){
   
 }
 
-async function criarNovoPet() {
+async function criarNovoPet(){
   const respostas = await configPet();
   pet = new Pet(respostas.nome, respostas.especie, respostas.genero);
   
@@ -33,60 +56,62 @@ async function criarNovoPet() {
   iniciar();
 }
 
-function alimentar(){
+function Alimentar(){
   console.log('alimentando...')
+  pet.alimentar();
 }
 
-function brincar(){
+function Brincar(){
   console.log('brincando...')
+  pet.brincar();
 }
 
-function dormir(){
+function Curar(){
   console.log('dormindo...')
+  pet.curar();
 }
 
-const PetMenu = () => {
-  
-  const nome = pet.nome;
-  const especie = pet.especie;
-  const genero = pet.genero;
-  const fome = pet.fome;
-  const saude = pet.saude;
-  const felicidade = pet.felicidade;
+function PetMenu(){
   
   console.log('----- Pet -----')
   console.log('')
-  console.log(`nome: ${nome}, ${especie} ${genero}`);
-  console.log(`Fome: ${fome}% | Saude: ${saude}% | Felicidade: ${felicidade}%`);
+  console.log(petImage)
+  console.log('')
+  console.log(`nome: ${pet.nome}, ${pet.especie} ${pet.genero}`);
+  console.log(`Fome: ${pet.fome}% | Saude: ${pet.saude}% | Felicidade: ${pet.felicidade}%`);
   
 }
 
-function exibirMenu() {
+function exibirMenu(){
   console.log('')
   console.log('\nMenu:');
   console.log('')
-  console.log('1. alimentar | 2. brincar | 3. dormir | 4. sair');
+  console.log('1. alimentar | 2. brincar | 3. cura | 4. sair');
   console.log('')
 }
 
-function iniciar() {
+function iniciar(){
   
   PetMenu();
   exibirMenu();
+  MenuOpcoes();
+  
+}
 
+function MenuOpcoes(){
   rl.question('Escolha uma opção: ', (opcao) => {
 
     switch (opcao) {
       case '1':
-        alimentar();
+        Alimentar();
         break;
         
       case '2':
-        brincar();
+        Brincar();
         break;
 
       case '3':
-        dormir();
+        Curar();
         break;
         
       case '4':
@@ -105,5 +130,3 @@ function iniciar() {
     }, 10000);
   });
 }
-
-criarNovoPet();
