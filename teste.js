@@ -1,30 +1,57 @@
-const rabbit = String(
-  `(\\(\\
- (-.-)
- o_(")(") ..... 🌻`
-);
+const keypress = require('keypress');
 
-const cat = String(`
-　／l、
-（ﾟ､ ｡ ７ - Nya?
-　l、 ~ヽ
-　じしf_,)ノ
-`);
+const menuOptions = [
+  "Coelho",
+  "Gato",
+  "Pato",
+  "Sair"
+];
 
-const duck = String(`
-   _
-__(.)>  - Quak!
-\\___)
+let selectedOption = 0;
 
-`)
+function displayMenu() {
+  console.clear();
+  console.log("Selecione uma opção:");
 
+  for (let i = 0; i < menuOptions.length; i++) {
+    if (i === selectedOption) {
+      console.log(`-> ${menuOptions[i]}`);
+    } else {
+      console.log(`   ${menuOptions[i]}`);
+    }
+  }
+}
 
-const coelho = [
-" (\\(\\",
-" (-.-)",
-" o_(\")(\") .... 🌻"
-]
+function handleKeypress(ch, key) {
+  if (key) {
+    if (key.name === 'up' && selectedOption > 0) {
+      selectedOption--;
+    } else if (key.name === 'down' && selectedOption < menuOptions.length - 1) {
+      selectedOption++;
+    } else if (key.name === 'return') {
+      handleSelection();
+    }
 
-//coelho.forEach(element => console.log(element))
+    displayMenu();
+  }
+}
 
-module.exports = { rabbit, cat, duck }
+function handleSelection() {
+  console.log(`Você selecionou: ${menuOptions[selectedOption]}`);
+
+  if (selectedOption === menuOptions.length - 1) {
+    console.log("Saindo...");
+    process.exit();
+  }
+
+  // Adicione a lógica para cada opção aqui
+}
+
+// Inicializar keypress
+keypress(process.stdin);
+process.stdin.setRawMode(true);
+process.stdin.resume();
+process.stdin.on('keypress', handleKeypress);
+
+// Iniciar o menu
+displayMenu();
